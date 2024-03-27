@@ -6,9 +6,14 @@ package vistas;
 
 import Formularios.DaoUserImplementacion;
 import Formularios.frmPrincipal;
-import Models.Usuarios;
 import interfacesDao.UsuarioDao;
-import java.util.List;
+import java.awt.HeadlessException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -19,19 +24,96 @@ public class reportesUsuarios extends javax.swing.JPanel {
     /**
      * Creates new form listasLibros
      */
+    //declaramos variables para el boton buscar 
+    private TableRowSorter trsFiltro;
+    String filtro;
+
     public reportesUsuarios() {
         initComponents();
         mostrarTabla();
+        estilodPanel();
+    }
+
+    private void estilodPanel() {
+        txtBuscarUsuario.putClientProperty("JTextField.placeholderText", "Ingrese el usuario a buscar");
     }
 
     private void mostrarTabla() {
         try {
             //Usuarios usuario = new Usuarios();
             UsuarioDao usuarioDao = new DaoUserImplementacion();
-            usuarioDao.listar().forEach((u) -> System.out.println(u.getNombre()));
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            usuarioDao.listar().forEach((u)
+                    -> modelo.addRow(new Object[]{u.getId(), u.getNombre(),
+                u.getApellidoPaterno(),
+                u.getApellidoMaterno(),
+                u.getDomicilio(),
+                u.getTelefono()}));
+
         } catch (Exception e) {
             System.out.println("Mostrar tabla => " + e.toString());
         }
+    }
+
+    private void borrar() {
+        int fila = jTable1.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Por favor selecione almenos una fila", "WARNING", JOptionPane.WARNING_MESSAGE);
+        } else {
+            UsuarioDao usuarioDao = new DaoUserImplementacion();
+            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+            for (int i : jTable1.getSelectedRows()) {
+                try {
+                    int idUsuario;
+                    idUsuario = (int) jTable1.getValueAt(i, 0);
+                    int opcion = JOptionPane.showConfirmDialog(null, """
+                                                    Estas seguro(a) de Eliminar al
+                                                    Registro de ID: """ + idUsuario
+                            + "\nDel Registro", "ELIMINANDO REGISTROS", JOptionPane.WARNING_MESSAGE);
+                    if (opcion == 0) {
+                        JOptionPane.showMessageDialog(null, "Registro con ID: " + idUsuario
+                                + "\n Eliminado", "ELIMINANDO REGISTROS", JOptionPane.WARNING_MESSAGE);
+                        usuarioDao.eliminar(idUsuario);
+                        modelo.removeRow(i);
+                    }
+                } catch (HeadlessException e) {
+                    JOptionPane.showMessageDialog(null, """
+                                                    Upss algo : 
+                                                    """ + e.toString(), "WARNING", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        // mostrarTabla();
+    }
+
+    public void filtro() {//creamos el metodo filtro
+        if (txtBuscarUsuario == null) {
+        } else {
+            try {
+                filtro = txtBuscarUsuario.getText();
+
+                //va a buscar en la colunna 1 y buscar lo que esta almacenado en la caja de texto
+                trsFiltro.setRowFilter(RowFilter.regexFilter(filtro, 1));
+            } catch (Exception e) {
+                System.out.println("buscar: " + e.toString());
+            }
+        }
+    }
+
+    private void buscar() {
+        txtBuscarUsuario.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                String cadena = txtBuscarUsuario.getText();
+                txtBuscarUsuario.setText(cadena);
+                repaint();
+
+                // Verificar si trsFiltro está inicializado antes de llamar a filtro()
+                if (trsFiltro != null) {
+                    filtro();
+                }
+            }
+        });
     }
 
     /**
@@ -44,7 +126,7 @@ public class reportesUsuarios extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txtBusacarLibro = new javax.swing.JTextField();
+        txtBuscarUsuario = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -52,16 +134,30 @@ public class reportesUsuarios extends javax.swing.JPanel {
         btnNuevo = new javax.swing.JToggleButton();
         btnBorrar = new javax.swing.JToggleButton();
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText("Usuarios");
 
+        txtBuscarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtBuscarUsuarioMouseClicked(evt);
+            }
+        });
+        txtBuscarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarUsuarioKeyTyped(evt);
+            }
+        });
+
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Apellido Paterno", "Apellido Materno", "Domicilio", "Teléfono"
@@ -70,6 +166,11 @@ public class reportesUsuarios extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +180,11 @@ public class reportesUsuarios extends javax.swing.JPanel {
         });
 
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -90,7 +196,7 @@ public class reportesUsuarios extends javax.swing.JPanel {
                 .addGap(6, 6, 6))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtBusacarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
@@ -115,7 +221,7 @@ public class reportesUsuarios extends javax.swing.JPanel {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBusacarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addGap(24, 24, 24)
@@ -133,6 +239,43 @@ public class reportesUsuarios extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        // System.out.println(jTable1.getSelectedRow());
+        int fila;
+        int idUsuario;
+        fila = jTable1.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Por favor selecione almenos una fila", "WARNING", JOptionPane.WARNING_MESSAGE);
+        } else {
+            UsuarioDao usuarioDao = new DaoUserImplementacion();
+            idUsuario = (int) jTable1.getValueAt(fila, 0);
+            frmPrincipal.colocarPanel(new RegistrarUsuario(usuarioDao.obtenerInformacionUsuario(idUsuario)));
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // TODO add your handling code here:
+        borrar();
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Haga clik en Buscar Nombre", "Atención", JOptionPane.WARNING_MESSAGE);
+        // txtBuscarUsuario.requestFocus();
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioKeyTyped
+        // TODO add your handling code here:
+        trsFiltro = new TableRowSorter(jTable1.getModel());
+        jTable1.setRowSorter(trsFiltro);
+    }//GEN-LAST:event_txtBuscarUsuarioKeyTyped
+
+    private void txtBuscarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioMouseClicked
+        // TODO add your handling code here:
+        this.buscar();
+    }//GEN-LAST:event_txtBuscarUsuarioMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnBorrar;
@@ -142,6 +285,6 @@ public class reportesUsuarios extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtBusacarLibro;
+    private javax.swing.JTextField txtBuscarUsuario;
     // End of variables declaration//GEN-END:variables
 }

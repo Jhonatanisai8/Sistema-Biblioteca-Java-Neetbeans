@@ -89,10 +89,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         mensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         bagraund.setBackground(new java.awt.Color(255, 255, 255));
 
-        menu.setBackground(new java.awt.Color(0, 0, 153));
+        menu.setBackground(new java.awt.Color(255, 0, 0));
         menu.setPreferredSize(new java.awt.Dimension(240, 642));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -102,7 +103,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnPrestamos.setBackground(new java.awt.Color(0, 0, 204));
+        btnPrestamos.setBackground(new java.awt.Color(255, 0, 0));
         btnPrestamos.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnPrestamos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libro (1).png"))); // NOI18N
         btnPrestamos.setText("Prestamos");
@@ -115,7 +116,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnDevolouciones.setBackground(new java.awt.Color(0, 0, 204));
+        btnDevolouciones.setBackground(new java.awt.Color(255, 0, 0));
         btnDevolouciones.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnDevolouciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/devolucion-de-producto (1).png"))); // NOI18N
         btnDevolouciones.setText("Devoluciones");
@@ -128,7 +129,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        tbnUsuarios.setBackground(new java.awt.Color(0, 0, 204));
+        tbnUsuarios.setBackground(new java.awt.Color(255, 0, 0));
         tbnUsuarios.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         tbnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/usuario (1).png"))); // NOI18N
         tbnUsuarios.setText("Usuarios");
@@ -141,7 +142,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnReportes.setBackground(new java.awt.Color(0, 0, 204));
+        btnReportes.setBackground(new java.awt.Color(255, 0, 0));
         btnReportes.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/reporte (1).png"))); // NOI18N
         btnReportes.setText("Reportes");
@@ -154,7 +155,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnLibros.setBackground(new java.awt.Color(0, 0, 204));
+        btnLibros.setBackground(new java.awt.Color(255, 0, 0));
         btnLibros.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnLibros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pila-de-libros-de-tres (1).png"))); // NOI18N
         btnLibros.setText("Libros");
@@ -167,7 +168,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnPrincipal.setBackground(new java.awt.Color(0, 0, 204));
+        btnPrincipal.setBackground(new java.awt.Color(255, 0, 0));
         btnPrincipal.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/casa (2).png"))); // NOI18N
         btnPrincipal.setText("Principal");
@@ -223,7 +224,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        header.setBackground(new java.awt.Color(0, 0, 255));
+        header.setBackground(new java.awt.Color(255, 0, 0));
         header.setPreferredSize(new java.awt.Dimension(150, 150));
 
         navText.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N

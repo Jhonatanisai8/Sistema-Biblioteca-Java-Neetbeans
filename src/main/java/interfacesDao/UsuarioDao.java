@@ -10,7 +10,10 @@ public interface UsuarioDao {
 
     public void modificar(Usuarios usuario);
 
-    public void eliminar(Usuarios usuario);
+    public void eliminar(int idUsuario);
 
     public List<Usuarios> listar();
+
+    public Usuarios obtenerInformacionUsuario(int idUsuario);
+
 }
