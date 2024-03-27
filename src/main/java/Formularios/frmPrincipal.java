@@ -9,9 +9,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javax.swing.JPanel;
-import vistas.RegistrarUsuario;
-import vistas.Reportes;
-import vistas.darAlta;
 import vistas.devoluciones;
 import vistas.listasLibros;
 import vistas.prestamos;
@@ -25,17 +22,17 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     public frmPrincipal() {
         initComponents();
-        this.mostrarPanel();
-        this.estilos();
-        this.fecha();
+        mostrarPanel();
+        estilos();
+        fecha();
 
     }
 
     private void mostrarPanel() {
-        this.colocarPanel(new vistaPrincipal());
+        colocarPanel(new vistaPrincipal());
     }
 
-    private void colocarPanel(JPanel p) {
+    public static void colocarPanel(JPanel p) {
         //vistaPrincipal p = new vistaPrincipal();
         p.setSize(878, 440);
         p.setLocation(0, 0);
@@ -54,8 +51,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         mensaje.setForeground(Color.BLACK);
         navText.setFont(Font.decode("Consolas"));
         FlatMaterialLighterIJTheme.setup();
-
-        this.colocarPanel(new vistaPrincipal());
     }
 
     private void fecha() {
@@ -349,7 +344,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
-        this.colocarPanel(new darAlta());
+       // this.colocarPanel(new RegistrarUsuario());
     }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
@@ -374,7 +369,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPrestamos;
     private javax.swing.JButton btnPrincipal;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JPanel content;
+    private static javax.swing.JPanel content;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;

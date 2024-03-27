@@ -1,13 +1,105 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Models;
 
-/**
- *
- * @author User
- */
 public class Libros {
-    
+
+    private int id;
+    private String titulo;
+    private String fecha;
+    private String autor;
+    private String categoria;
+    private String editorial;
+    private String paginas;
+    private String discripcion;
+    private String ejemplares;
+    private int stock;
+    private int disponibles;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(String editorial) {
+        this.editorial = editorial;
+    }
+
+    public String getPaginas() {
+        return paginas;
+    }
+
+    public void setPaginas(String paginas) {
+        this.paginas = paginas;
+    }
+
+    public String getDiscripcion() {
+        return discripcion;
+    }
+
+    public void setDiscripcion(String discripcion) {
+        this.discripcion = discripcion;
+    }
+
+    public String getEjemplares() {
+        return ejemplares;
+    }
+
+    public void setEjemplares(String ejemplares) {
+        this.ejemplares = ejemplares;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getDisponibles() {
+        return disponibles;
+    }
+
+    public void setDisponibles(int disponibles) {
+        this.disponibles = disponibles;
+    }
+
 }

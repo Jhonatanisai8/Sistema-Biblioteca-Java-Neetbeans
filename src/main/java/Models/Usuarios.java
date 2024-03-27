@@ -3,7 +3,7 @@ package Models;
 public class Usuarios {
 
     private int id;
-    private String varchar;
+    private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String domicilio;
@@ -19,12 +19,12 @@ public class Usuarios {
         this.id = id;
     }
 
-    public String getVarchar() {
-        return varchar;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setVarchar(String varchar) {
-        this.varchar = varchar;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getApellidoPaterno() {

@@ -4,6 +4,12 @@
  */
 package vistas;
 
+import Formularios.DaoUserImplementacion;
+import Formularios.frmPrincipal;
+import Models.Usuarios;
+import interfacesDao.UsuarioDao;
+import java.util.List;
+
 /**
  *
  * @author User
@@ -15,6 +21,17 @@ public class reportesUsuarios extends javax.swing.JPanel {
      */
     public reportesUsuarios() {
         initComponents();
+        mostrarTabla();
+    }
+
+    private void mostrarTabla() {
+        try {
+            //Usuarios usuario = new Usuarios();
+            UsuarioDao usuarioDao = new DaoUserImplementacion();
+            usuarioDao.listar().forEach((u) -> System.out.println(u.getNombre()));
+        } catch (Exception e) {
+            System.out.println("Mostrar tabla => " + e.toString());
+        }
     }
 
     /**
@@ -55,6 +72,11 @@ public class reportesUsuarios extends javax.swing.JPanel {
         btnEditar.setText("Editar");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnBorrar.setText("Borrar");
 
@@ -104,6 +126,12 @@ public class reportesUsuarios extends javax.swing.JPanel {
                 .addGap(16, 16, 16))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        frmPrincipal.colocarPanel(new RegistrarUsuario());
+
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
