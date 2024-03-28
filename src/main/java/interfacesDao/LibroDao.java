@@ -1,4 +1,3 @@
-
 package interfacesDao;
 
 import Models.Libros;
@@ -6,12 +5,15 @@ import Models.Usuarios;
 import java.util.List;
 
 public interface LibroDao {
-     //metodos 
+    //metodos 
+
     public void regristrar(Libros libro);
 
     public void modificar(Libros libro);
 
-    public void eliminar(Libros libro);
+    public void eliminar(int idLibro);
 
     public List<Libros> listar();
+
+    public Usuarios obtenerInformacion(int idLibro);
 }

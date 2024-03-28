@@ -4,11 +4,12 @@ public class Libros {
 
     private int id;
     private String titulo;
-    private String fecha;
+    private int fecha;
     private String autor;
+    private String idioma;
     private String categoria;
     private String editorial;
-    private String paginas;
+    private int paginas;
     private String discripcion;
     private String ejemplares;
     private int stock;
@@ -16,6 +17,14 @@ public class Libros {
 
     public int getId() {
         return id;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
     }
 
     public void setId(int id) {
@@ -30,11 +39,11 @@ public class Libros {
         this.titulo = titulo;
     }
 
-    public String getFecha() {
+    public int getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(int fecha) {
         this.fecha = fecha;
     }
 
@@ -62,11 +71,11 @@ public class Libros {
         this.editorial = editorial;
     }
 
-    public String getPaginas() {
+    public int getPaginas() {
         return paginas;
     }
 
-    public void setPaginas(String paginas) {
+    public void setPaginas(int paginas) {
         this.paginas = paginas;
     }
 
