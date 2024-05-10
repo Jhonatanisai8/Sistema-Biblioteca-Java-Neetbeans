@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vistas;
 
 import Formularios.DaoUserImplementacion;
@@ -15,15 +11,8 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author User
- */
 public class reportesUsuarios extends javax.swing.JPanel {
 
-    /**
-     * Creates new form listasLibros
-     */
     //declaramos variables para el boton buscar 
     private TableRowSorter trsFiltro;
     String filtro;
@@ -56,34 +45,35 @@ public class reportesUsuarios extends javax.swing.JPanel {
     }
 
     private void borrar() {
-        int fila = jTable1.getSelectedRow();
-        if (fila < 0) {
-            JOptionPane.showMessageDialog(null, "Por favor selecione almenos una fila", "WARNING", JOptionPane.WARNING_MESSAGE);
-        } else {
-            UsuarioDao usuarioDao = new DaoUserImplementacion();
-            DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-            for (int i : jTable1.getSelectedRows()) {
-                try {
-                    int idUsuario;
-                    idUsuario = (int) jTable1.getValueAt(i, 0);
-                    int opcion = JOptionPane.showConfirmDialog(null, """
-                                                    Estas seguro(a) de Eliminar al
-                                                    Registro de ID: """ + idUsuario
-                            + "\nDel Registro", "ELIMINANDO REGISTROS", JOptionPane.WARNING_MESSAGE);
-                    if (opcion == 0) {
-                        JOptionPane.showMessageDialog(null, "Registro con ID: " + idUsuario
-                                + "\n Eliminado", "ELIMINANDO REGISTROS", JOptionPane.WARNING_MESSAGE);
-                        usuarioDao.eliminar(idUsuario);
-                        modelo.removeRow(i);
-                    }
-                } catch (HeadlessException e) {
-                    JOptionPane.showMessageDialog(null, """
-                                                    Upss algo : 
-                                                    """ + e.toString(), "WARNING", JOptionPane.WARNING_MESSAGE);
-                }
-            }
+        int[] filasSeleccionadas = jTable1.getSelectedRows();
+        if (filasSeleccionadas.length == 0) {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione al menos una fila", "WARNING", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        // mostrarTabla();
+
+        UsuarioDao usuarioDao = new DaoUserImplementacion();
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        String ids = "";
+        for (int i = 0; i < filasSeleccionadas.length; i++) {
+            int idUsuario = (int) jTable1.getValueAt(filasSeleccionadas[i], 0);
+            if (!ids.isEmpty()) {
+                ids += ", ";
+            }
+            //vamos agregando
+            ids += "" + idUsuario;
+        }
+
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) de eliminar los registros con ID: " + ids
+                + "\nDel registro?", "ELIMINANDO REGISTROS", JOptionPane.WARNING_MESSAGE);
+        if (opcion == 0) {
+            for (int i = filasSeleccionadas.length - 1; i >= 0; i--) {
+                int idUsuario = (int) jTable1.getValueAt(filasSeleccionadas[i], 0);
+                usuarioDao.eliminar(idUsuario);
+                modelo.removeRow(filasSeleccionadas[i]);
+            }
+            JOptionPane.showMessageDialog(null, "Registros eliminados", "ELIMINANDO REGISTROS", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public void filtro() {//creamos el metodo filtro
@@ -155,6 +145,7 @@ public class reportesUsuarios extends javax.swing.JPanel {
             }
         });
 
+        jTable1.setBackground(new java.awt.Color(0, 0, 153));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
