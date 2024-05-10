@@ -119,7 +119,7 @@ public class RegistrarUsuario extends javax.swing.JPanel {
                     }
 
                     JOptionPane.showMessageDialog(null, mensaje, "INSERTANDO DATOS", JOptionPane.INFORMATION_MESSAGE);
-                    borrarCampos();
+                    //borrarCampos();
                 } catch (HeadlessException e) {
                     String mensaje = "";
                     if (isEdition) {
