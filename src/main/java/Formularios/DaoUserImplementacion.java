@@ -137,4 +137,58 @@ public class DaoUserImplementacion extends Conexion
         }
         return usuario;
     }
+
+    @Override
+    public Usuarios obtenerIdUsuario(int idUsuario) {
+        Usuarios usuario = null;
+        try {
+            this.Conectar();
+            String sql = "SELECT * FROM USUARIOS WHERE id = ?  limit 1";
+            PreparedStatement consulta = this.conexion.prepareStatement(sql);
+            consulta.setInt(1, idUsuario);
+
+            ResultSet seleccion = consulta.executeQuery();
+
+            while (seleccion.next()) {
+                usuario = new Usuarios();
+                usuario.setId(seleccion.getInt("id"));
+                usuario.setNombre(seleccion.getString("nombre"));
+                usuario.setApellidoPaterno(seleccion.getString("apellidopaterno"));
+                usuario.setApellidoMaterno(seleccion.getString("apellidomaterno"));
+                usuario.setDomicilio(seleccion.getString("domicilio"));
+                usuario.setTelefono(seleccion.getString("telefono"));
+                usuario.setSanciones(seleccion.getInt("sanciones"));
+                usuario.setDineroSanciones(seleccion.getInt("dinerosancionado"));
+            }
+
+            seleccion.close();
+            consulta.close();
+        } catch (SQLException e) {
+            System.out.println("Error en obtenerIdUsuario(int idUsuario):  " + e.toString());
+        } finally {
+            this.cerrarBD();
+        }
+        return usuario;
+    }
+
+    @Override
+    public void sancionar(Usuarios usuario) {
+
+        try {
+            this.Conectar();
+            String sql = "UPDATE USUARIOS SET sanciones = ?, dinerosancionado = ?, WHERE id = ? ";
+
+            PreparedStatement consulta = this.conexion.prepareStatement(sql);
+            consulta.setInt(1, usuario.getSanciones());
+            consulta.setInt(2, usuario.getDineroSanciones());
+            consulta.setInt(3, usuario.getId());
+
+            consulta.executeUpdate();
+            consulta.close();
+        } catch (SQLException e) {
+            System.out.println("Error en sancionar(Usuarios usuario):  " + e.toString());
+        } finally {
+            this.cerrarBD();
+        }
+    }
 }

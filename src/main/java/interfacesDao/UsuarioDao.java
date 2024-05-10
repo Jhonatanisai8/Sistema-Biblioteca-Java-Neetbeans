@@ -16,4 +16,7 @@ public interface UsuarioDao {
 
     public Usuarios obtenerInformacionUsuario(int idUsuario);
 
+    public Usuarios obtenerIdUsuario(int idUsuario);
+
+    public void sancionar(Usuarios usuario);
 }
