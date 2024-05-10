@@ -15,5 +15,8 @@ public interface LibroDao {
 
     public List<Libros> listar();
 
-    public Usuarios obtenerInformacion(int idLibro);
+    public Libros obtenerInformacion(int idLibro);
+
+    public Libros obtenerIdLibro(int libroId);
+
 }
